@@ -1,2 +1,6 @@
 .vscode
-./dist
+# Ignore all dist folders
+**/dist/
+
+# Node stuff
+node_modules/

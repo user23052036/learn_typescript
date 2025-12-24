@@ -1,7 +1,6 @@
 let age: number = 20;
 
-if(age < 50)
-{
+if(age < 50){
     console.log("too young!");
     age += 10;
 }
@@ -20,7 +19,8 @@ let random = [1,44.5,"sonu",true,'T'];
 let numbers: number[] = [1,4,55,3,6,2,2,66];
 let empty = [];    // empty array by default type any
 
-function render(document: any)
-{
+function render(document: any): string{
+    let name: string = "Souvik"
     console.log(document);
+    return "hello ${name}"
 }
