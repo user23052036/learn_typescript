@@ -1,3 +1,6 @@
+export {}; // makes file a module
+
+
 /* =========================================================
    1️⃣ USING `type` (shape only, no class intention)
    ========================================================= */
@@ -151,3 +154,90 @@ class Tea3 implements ChaiFinal {
    - Think of it as: Actual object blueprint
 
 */
+
+type response1 = { 
+    ok: true | false 
+}; // ONE object shape, with a flexible value.
+
+type response2 = {ok: true} | {ok: false};// TWO distinct object shapes.
+
+class myRes1 implements response1 {
+    ok: boolean = true;
+}
+
+// class myRes2 implements response2 {
+//     ok: boolean = true;
+// }
+//Classes cannot implement union types because a union represents multiple possible shapes, not one guaranteed shape.
+// Thus, the compiler cannot ensure that the class adheres to all possible structures defined by the union.
+
+
+//----------------------------------------------------------------------------------------------------------
+// intersection types with classes
+
+type A = {a: string};
+type B = {b: number};
+type C = A & B; // intersection type
+
+class myClass implements C {
+    a: string = "hello";
+    b: number = 42;
+}
+
+// An intersection type like C requires the implementing class to have all properties from both A and B.
+// Therefore, myClass must define both a and b properties to satisfy the contract of type C.
+
+//----------------------------------------------------------------------------------------------------------
+// optional properties in interfaces vs types
+
+interface InterfaceWithOptional {
+    prop1: string;
+    prop2?: number; // optional
+}
+
+type TypeWithOptional = {
+    prop1: string;
+    prop2?: number; // optional
+};
+
+class ClassWithInterface implements InterfaceWithOptional {
+    prop1: string = "test";
+    // prop2 is optional, so it can be omitted
+}
+
+class ClassWithType implements TypeWithOptional {
+    prop1: string = "test";
+    // prop2 is optional, so it can be omitted
+}
+
+const u1: TypeWithOptional = { prop1: "hello" };
+const u2: InterfaceWithOptional = { prop1: "hello" };
+
+// Both interfaces and types handle optional properties similarly when implemented in classes.
+// The implementing class can choose to include or omit the optional property without any issues.
+
+//----------------------------------------------------------------------------------------------------------
+// readonly properties in interfaces vs types
+
+interface InterfaceWithReadonly {
+    readonly id: number;
+    name: string;
+}
+
+type TypeWithReadonly = {
+    readonly id: number;
+    name: string;
+};
+
+const cfg: TypeWithReadonly = { id: 1, name: "config" };
+// for the first time value can be assigned
+// cfg.id = 2; // Error: Cannot assign to 'id' because it is a read-only property.
+
+const cfg2: InterfaceWithReadonly = { id: 1, name: "config" };
+// for the first time value can be assigned
+// cfg2.id = 2; // Error: Cannot assign to 'id' because it is a read-only property.
+
+// Both interfaces and types enforce readonly properties similarly.
+// Attempting to modify a readonly property results in a compile-time error.
+
+//----------------------------------------------------------------------------------------------------------
